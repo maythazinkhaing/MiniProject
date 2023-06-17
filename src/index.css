@@ -1,10 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 body {
   margin: 0;
+  background-color: #f6f6f7;
+}
+
+h3,
+h5 {
+  font-family: "Encode Sans";
 }
 
 .container {
   margin: 0;
   padding: 48px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header > h3 {
+  font-size: 32px;
+  letter-spacing: 0.02em;
+}
+
+/* radio */
+label {
+  font-family: "Roboto";
+  font-size: 20px;
+  padding-right: 10px;
+}
+
+input[type="radio"] {
+  accent-color: #024e74;
+  width: 32px;
 }
 
 .gridLayout {
@@ -15,7 +47,7 @@ body {
 .card_container {
   display: flex;
   background: #fdfdfd;
-  border: 1px solid #e3e1e6;
+  border: 1px solid #e3e1e5;
   border-radius: 12px;
   padding: 16px;
   align-items: center;
@@ -26,6 +58,12 @@ body {
   height: 72px;
   margin-right: 12px;
   border-radius: 50%;
+  background-color: #00000012;
+}
+
+.card_name {
+  font-size: 20px;
+  color: #23292b;
 }
 
 /* pagination */
@@ -33,7 +71,20 @@ body {
   margin-top: 16px;
   display: flex;
   justify-content: space-between;
+}
+
+.pageButton {
+  font-family: "Roboto";
+  font-size: 16px;
   color: #024e74;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.inactive {
+  cursor: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* spinner */
@@ -49,6 +100,9 @@ body {
 
 .spinner-container {
   grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .loading-spinner {
   width: 50px;
@@ -57,6 +111,4 @@ body {
   border-top: 10px solid #383636; /* Black */
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
-
-  align-items: center;
 }

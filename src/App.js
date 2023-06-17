@@ -1,5 +1,4 @@
 import Home from "./screen/Home";
-import Card from "./view/Card";
 
 function App() {
   return (
