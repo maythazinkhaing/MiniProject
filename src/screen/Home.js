@@ -3,6 +3,7 @@ import axios from "axios";
 import Card from "../view/Card";
 import LoadingSpinner from "../view/spinner";
 import URL from "../utils/constants";
+import Modal from "react-modal";
 
 function Home() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -10,6 +11,8 @@ function Home() {
   const [nextUrl, setNextUrl] = useState(URL);
   const [previousUrl, setpreviousUrl] = useState("");
   const [radioCheck, setRadioCheck] = useState("id");
+  const [modal, setModal] = useState();
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const handleFetch = async (url) => {
     setisLoaded(false);
@@ -64,6 +67,37 @@ function Home() {
     setRadioCheck(event.target.value);
   };
 
+  // function getLocation(id) {
+
+  //   pokemonData.forEach(async (prev) => {
+
+  //     if (prev.id === id) {
+
+  //     }
+  //   });
+  // }
+
+  const handleModal = (id) => {
+    setIsOpen(true);
+    pokemonData.forEach(async (prev) => {
+      if (prev.id === id) {
+        const result = await axios.get(prev.location_area_encounters);
+
+        setModal({
+          name: prev.name,
+          type: prev.types,
+          img: prev.sprites.front_default,
+          img_2: prev.sprites.front_shiny,
+          location: result.data?.[0].location_area?.name,
+        });
+      }
+    });
+  };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   useEffect(() => {
     handleFetch(nextUrl);
   }, []);
@@ -107,6 +141,7 @@ function Home() {
                 key={item.id}
                 name={item.name}
                 image={item.sprites.front_default}
+                handleModal={() => handleModal(item.id)}
               />
             );
           })}
@@ -131,6 +166,26 @@ function Home() {
           </span>
         </div>
       )}
+
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal">
+        <div className="modal_header">
+          <h3>{modal?.name}</h3>
+          <span onClick={closeModal}>X</span>
+        </div>
+        <hr />
+        <img src={modal?.img} alt="" className="modal_img" />
+        <img src={modal?.img_2} alt="" className="modal_img" />
+        <div className="modal_type">
+          <h3>Type</h3>
+          {modal?.type?.map((item, index) => {
+            return <h4 key={index}> {item.type.name}</h4>;
+          })}
+        </div>
+        <div className="modal_type">
+          <h3>Location</h3>
+          <h4 className="modal_location">{modal?.location}</h4>
+        </div>
+      </Modal>
     </div>
   );
 }
